@@ -2,7 +2,7 @@
 % Please edit documentation in R/Rgff.R
 \name{plot_features}
 \alias{plot_features}
-\title{Plots or exports an image of the feature tree from a gff file}
+\title{Plots or exports an image of the feature tree from a GFF file}
 \usage{
 plot_features(
   inFile,
@@ -13,7 +13,7 @@ plot_features(
 )
 }
 \arguments{
-\item{inFile}{Path to the input gff file}
+\item{inFile}{Path to the input GFF file}
 
 \item{outFile}{Path to the output features image file, if not provided the tree will be plotted}
 
@@ -27,7 +27,7 @@ plot_features(
 Path of the output features image file
 }
 \description{
-This function plots the feature tree from a gff file or, if an output file name is provided,
+This function plots the feature tree from a GFF file or, if an output file name is provided,
 exports an image of in the desired format ("png", "pdf" or "svg").
 Packages "DiagrammeR", "DiagrammeRsvg" and "rsvg" must be installed to use this function.
 }

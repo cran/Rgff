@@ -15,7 +15,7 @@ gffFile1 <- file.path(dir,"AthSmall.gff3")
 
 ## ----message=FALSE, warning=FALSE---------------------------------------------
 ##============================================================================##
-## C    Check the consistency and order of the gff file 
+## C    Check the consistency and order of the GFF file 
 ##============================================================================##
 
 check_gff(gffFile1)
@@ -38,31 +38,26 @@ head(read.table(gffFile2,sep="\t",header=FALSE), n=7L)
 
 ## -----------------------------------------------------------------------------
 ##============================================================================##
-## E    Obtain the stats of the gff file
+## E    Obtain the stats of the GFF file
 ##============================================================================##
 gff_stats(gffFile1)
 
-## ----eval=FALSE---------------------------------------------------------------
-#  gffFile1Stats <- gff_stats(gffFile1)
-#  
-#  write.table(gffFile1Stats, file="gffFile1Stats.txt",row.names = FALSE)
-
 ## -----------------------------------------------------------------------------
 ##============================================================================##
-## F    Obtain the stats of the gff file, disaggregated by chromosome
+## F    Obtain the stats of the GFF file, disaggregated by chromosome
 ##============================================================================##
 print(gff_stats_by_chr(gffFile1), n=50)
 
 ## -----------------------------------------------------------------------------
 ##============================================================================##
-## G    Extract the feature organization of the gff file as a tree
+## G    Extract the feature organization of the GFF file as a tree
 ##============================================================================##
 get_features(gffFile1)
 
 
 ## ----out.height="100%", out.width="100%", message=FALSE, warning=FALSE--------
 ##============================================================================##
-## H    Plot the dependency tree of the gff file
+## H    Plot the dependency tree of the GFF file
 ##============================================================================##
 
 #install DiagrammeR if you do not have it installed (you need to do this only once)
@@ -76,7 +71,7 @@ plot_features(gffFile1)
 
 ## ----out.height="100%", out.width="100%"--------------------------------------
 ##=================================================================================##
-## I  Plot the dependency tree of the gff file in PNG format (default format)
+## I  Plot the dependency tree of the GFF file in PNG format (default format)
 ##    and include the number of items of each feature
 ##=================================================================================##
 
@@ -84,7 +79,7 @@ plot_features(gffFile1, includeCounts = TRUE)
 
 ## ---- results=FALSE, message=FALSE, warning=FALSE-----------------------------
 ##=================================================================================##
-## J  Plot the dependency tree of the gff file in PDF format 
+## J  Plot the dependency tree of the GFF file in PDF format 
 ##=================================================================================##
 
 # get the plot in a PDF file
@@ -108,14 +103,14 @@ plot_features(gffFile1, outPlot1, exportFormat = "pdf", includeCounts = FALSE)
 
 ## ----message=FALSE, warning=FALSE---------------------------------------------
 ##============================================================================##
-## K    Extract the feature organization of the gff file in data.frame format
+## K    Extract the feature organization of the GFF file in data.frame format
 ##============================================================================##
 get_features(gffFile1, outFormat = 'data.frame', includeCounts = TRUE)
 
 
 ## ----message=FALSE, warning=FALSE---------------------------------------------
 ##=================================================================================##
-## L    Extract the feature organization of the gff as JSON
+## L    Extract the feature organization of the GFF as JSON
 ##=================================================================================##
 gffFile1_json_features <- get_features(gffFile1, outFormat = 'JSON')
 strsplit(gffFile1_json_features,"\\n");
@@ -123,7 +118,7 @@ strsplit(gffFile1_json_features,"\\n");
 
 ## ----message=FALSE, warning=FALSE---------------------------------------------
 ##=================================================================================##
-## M  Sort an unsorted gff file
+## M  Sort an unsorted GFF file
 ##=================================================================================##
 
 #sorts the unsorted file gffFile2 (eden.gff3)
@@ -139,7 +134,7 @@ head(read.table(gffFile2_sorted,sep="\t"), n=10L)
 ## ----message=FALSE, warning=FALSE---------------------------------------------
 
 ##============================================================================##
-## N    Convert a gff file to SAF format, only the "gene" feature
+## N    Convert a GFF file to SAF format, only the "gene" feature
 ##============================================================================##
 
 safFileConverted <- saf_from_gff(gffFile1, features = c("gene"))
@@ -150,7 +145,7 @@ read.table(safFileConverted,sep="\t",header=TRUE)
 ## ----message=FALSE, warning=FALSE---------------------------------------------
 
 ##================================================================================##
-## O    Convert a gff file to SAF format, both "gene" and "ncRNA_gene" features
+## O    Convert a GFF file to SAF format, both "gene" and "ncRNA_gene" features
 ##================================================================================##
 
 safFileConverted2 <- saf_from_gff(gffFile1, features = c("gene","ncRNA_gene"))
@@ -160,7 +155,7 @@ read.table(safFileConverted2,sep="\t",header=TRUE)
 
 ## ----message=FALSE, warning=FALSE---------------------------------------------
 ##============================================================================##
-## P    Convert a gff file to SAF format, compiling "exons by gene"
+## P    Convert a GFF file to SAF format, compiling "exons by gene"
 ##============================================================================##
 
 safFileConverted3 <- saf_from_gff(gffFile1, features = c("gene > exon"))
@@ -181,7 +176,7 @@ safFileConverted5 <- saf_from_gff(gffFile1, features = c("gene : exon"), sep = '
 ## ----message=FALSE, warning=FALSE---------------------------------------------
 
 ##==============================================================================##
-## Q    Convert a gff file to SAF format, compiling "exons by gene"  
+## Q    Convert a GFF file to SAF format, compiling "exons by gene"  
 ##      and "exons by non-coding RNA genes"
 ##==============================================================================##
 
@@ -197,7 +192,7 @@ read.table(safFileConverted6,sep="\t",header=TRUE)
 
 # load and show our example GTF file
 gtfFile1 <- file.path(dir,"AthSmall.gtf")
-head(read.table(gtfFile1,sep="\t"))[,1:8]
+head(read.table(gtfFile1,sep="\t"))
 
 
 ## ----echo=TRUE, results='hide', message=FALSE, warning=FALSE------------------
@@ -209,6 +204,6 @@ gffFileConverted <- gtf_to_gff3(gtfFile1, forceOverwrite = TRUE)
 
 ## ----message=FALSE, warning=FALSE---------------------------------------------
 # show the results of the conversion
-head(read.table(gffFileConverted,sep="\t"))[,1:8]
+head(read.table(gffFileConverted,sep="\t"))
 
 

@@ -1569,36 +1569,36 @@ pre code {
 
 <h1 class="title toc-ignore">Using Rgff</h1>
 <h4 class="author">Juan Antonio Garcia-Martin, Juan Carlos Oliveros, Rafael Torres-Perez</h4>
-<h4 class="date">22/06/2022</h4>
+<h4 class="date">24/06/2022</h4>
 
 </div>
 
 <div id="TOC">
 <ul>
 <li><a href="#about-rgff">0. About Rgff</a></li>
-<li><a href="#check">1. Check the consistency and order of a gff file</a></li>
+<li><a href="#check">1. Check the consistency and order of a GFF file</a></li>
 <li><a href="#getting-the-stats">2. Getting the stats</a></li>
-<li><a href="#extracting-the-feature-organization-of-the-gff-file">3. Extracting the feature organization of the gff file</a></li>
-<li><a href="#sort">4. Sorting gff files</a></li>
-<li><a href="#convert-a-gff-file-to-a-saf-file">5. Convert a gff file to a SAF file</a></li>
+<li><a href="#extracting-the-feature-organization-of-the-gff-file">3. Extracting the feature organization of the GFF file</a></li>
+<li><a href="#sort">4. Sorting GFF files</a></li>
+<li><a href="#convert-a-gff-file-to-a-saf-file">5. Convert a GFF file to a SAF file</a></li>
 <li><a href="#convert-a-gtf-to-a-gff3-file">6. Convert a GTF to a GFF3 file</a></li>
 </ul>
 </div>
 
 <div id="about-rgff" class="section level1">
 <h1>0. About Rgff</h1>
-<p><strong>Rgff</strong> is a R package that provides some useful tools to retrieve statistical and hierarchical information contained in gff files, either <em>general feature format</em> (GFF3) or <em>gene transfer format</em> (GTF) formatted files<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. GFF3 and GTF are the most widely used data formats for genomic annotations. <strong>Rgff</strong> also holds some other interesting utilities, like convert the GTF files to the currently recommended GFF3 format, check if a gff file is correctly formatted or generate SAF files from gff files. If you are not familiar with GFF3/GTF formats, please access <a href="https://www.ensembl.org/info/website/upload/gff.html">this</a>, <a href="http://gmod.org/wiki/GFF3">this</a> or <a href="https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md">this</a> link for a detailed information.</p>
+<p><strong>Rgff</strong> is a R package that provides some useful tools to retrieve statistical and hierarchical information contained in GFF files, either <em>general feature format</em> (GFF3) or <em>gene transfer format</em> (GTF) formatted files<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. GFF3 and GTF are the most widely used data formats for genomic annotations. <strong>Rgff</strong> also holds some other interesting utilities, like convert the GTF files to the currently recommended GFF3 format, check if a GFF file is correctly formatted or generate SAF files from GFF files. If you are not familiar with GFF3/GTF formats, please access <a href="https://www.ensembl.org/info/website/upload/gff.html">this</a>, <a href="http://gmod.org/wiki/GFF3">this</a> or <a href="https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md">this</a> link for a detailed information.</p>
 <p>In summary, with <strong>Rgff</strong> you can:</p>
-<pre><code>* Verify if the format and feature ordering of your gff file is correct
-* Obtain relevant stats of the content of your gff file
-* Extract the feature structure of a gff file and export this hierarchy in a graphical chart
-* Sort an unsorted gff file
-* Convert a gff file into a SAF-formatted file
+<pre><code>* Verify if the format and feature ordering of your GFF file is correct
+* Obtain relevant stats of the content of your GFF file
+* Extract the feature structure of a GFF file and export this hierarchy in a graphical chart
+* Sort an unsorted GFF file
+* Convert a GFF file into a SAF-formatted file
 * Convert a GTF file to GFF3</code></pre>
 </div>
 <div id="check" class="section level1">
-<h1>1. Check the consistency and order of a gff file</h1>
-<p>Let’s suppose that we are interested in obtaining diverse information (stats, feature structure) that is contained in a given gff file. First, we would like to check if the file meet the conventions of a particular gff format.</p>
+<h1>1. Check the consistency and order of a GFF file</h1>
+<p>Let’s suppose that we are interested in obtaining diverse information (stats, feature structure) that is contained in a given GFF file. First, we would like to check if the file meet the conventions of a particular GFF format.</p>
 <p>We start loading the package:</p>
 <pre class="r"><code>##============================================================================##
 ## A    Load the library
@@ -1613,7 +1613,7 @@ dir &lt;- system.file(&quot;extdata&quot;, package=&quot;Rgff&quot;)
 gffFile1 &lt;- file.path(dir,&quot;AthSmall.gff3&quot;)</code></pre>
 <p>and now we check if the file is correctly GFF3-formatted:</p>
 <pre class="r"><code>##============================================================================##
-## C    Check the consistency and order of the gff file 
+## C    Check the consistency and order of the GFF file 
 ##============================================================================##
 
 check_gff(gffFile1)</code></pre>
@@ -1652,7 +1652,7 @@ head(read.table(gffFile2,sep=&quot;\t&quot;,header=FALSE), n=7L)</code></pre>
 <p>Let’s suppose that we are interested in obtaining the names of the features present in the first GFF3 example file, the number of items by feature and the average, maximum and minimum size of each feature.</p>
 <p>We can use <em>gff_stats</em> to obtain these statistics:</p>
 <pre class="r"><code>##============================================================================##
-## E    Obtain the stats of the gff file
+## E    Obtain the stats of the GFF file
 ##============================================================================##
 gff_stats(gffFile1)</code></pre>
 <pre><code>## # A tibble: 14 × 5
@@ -1672,14 +1672,10 @@ gff_stats(gffFile1)</code></pre>
 ## 12 snoRNA               193       193      193     1
 ## 13 tRNA                  78        84       72     2
 ## 14 three_prime_UTR      235.      268      194     3</code></pre>
-<p>As it can be seen in the report, this gff file contains 14 feature types: <em>chromosome</em>, <em>CDS</em>, <em>exon</em>, <em>5’UTR</em>, <em>gene</em>, etc. For instance, there are 23 <em>exons</em> in this simple gff. This set of exons have an average length 305, with a minimum length 35 and maximum length 1034.</p>
-<p>We can now store the stats in a file:</p>
-<pre class="r"><code>gffFile1Stats &lt;- gff_stats(gffFile1)
-
-write.table(gffFile1Stats, file=&quot;gffFile1Stats.txt&quot;,row.names = FALSE)</code></pre>
+<p>As it can be seen in the report, this GFF file contains 14 feature types: <em>chromosome</em>, <em>CDS</em>, <em>exon</em>, <em>5’UTR</em>, <em>gene</em>, etc. For instance, there are 23 <em>exons</em> in this simple GFF. This set of exons have an average length 305, with a minimum length 35 and maximum length 1034.</p>
 <p>Our package provides the function <em>gff_stats_by_chr</em> in order to obtain a similar statistical summary but dissaggregated by chromosome:</p>
 <pre class="r"><code>##============================================================================##
-## F    Obtain the stats of the gff file, disaggregated by chromosome
+## F    Obtain the stats of the GFF file, disaggregated by chromosome
 ##============================================================================##
 print(gff_stats_by_chr(gffFile1), n=50)</code></pre>
 <pre><code>## # A tibble: 21 × 6
@@ -1709,13 +1705,12 @@ print(gff_stats_by_chr(gffFile1), n=50)</code></pre>
 ## 21 5     snRNA                 41        41       41     1</code></pre>
 </div>
 <div id="extracting-the-feature-organization-of-the-gff-file" class="section level1">
-<h1>3. Extracting the feature organization of the gff file</h1>
-<p><strong>Rgff</strong> allows to extract the hierarchical feature organization of a gff file showing the dependency between the features. The <em>get_features</em> function provides an output displaying this structure in form of a dependence tree by default:</p>
+<h1>3. Extracting the feature organization of the GFF file</h1>
+<p><strong>Rgff</strong> allows to extract the hierarchical feature organization of a GFF file showing the dependency between the features. The <em>get_features</em> function provides an output displaying this structure in form of a dependence tree by default:</p>
 <pre class="r"><code>##============================================================================##
-## G    Extract the feature organization of the gff file as a tree
+## G    Extract the feature organization of the GFF file as a tree
 ##============================================================================##
 get_features(gffFile1)</code></pre>
-<pre><code>## Creating pairs file...</code></pre>
 <pre><code>##                      levelName
 ## 1                             
 ## 2   ¦--chromosome             
@@ -1732,16 +1727,16 @@ get_features(gffFile1)</code></pre>
 ## 13      ¦   °--exon           
 ## 14      ¦--rRNA               
 ## 15      ¦   °--exon           
-## 16      ¦--snRNA              
+## 16      ¦--snoRNA             
 ## 17      ¦   °--exon           
-## 18      ¦--snoRNA             
+## 18      ¦--snRNA              
 ## 19      ¦   °--exon           
 ## 20      °--tRNA               
 ## 21          °--exon</code></pre>
-<p>As it is shown, the highest features (nodes) in the gff are <em>chromosome</em>, <em>gene</em> and <em>ncRNA_gene</em> (non-coding RNA gene). Taking for example the <em>gene</em> node, we see that it has a child node, the <em>mRNA</em> feature. Depending from <em>mRNA</em> there are four child features, that are siblings from each other: <em>CDS</em>, <em>exon</em>, <em>five_prime_UTR</em> and <em>three_prime_UTR</em>.</p>
+<p>As it is shown, the highest features (nodes) in the GFF are <em>chromosome</em>, <em>gene</em> and <em>ncRNA_gene</em> (non-coding RNA gene). Taking for example the <em>gene</em> node, we see that it has a child node, the <em>mRNA</em> feature. Depending from <em>mRNA</em> there are four child features, that are siblings from each other: <em>CDS</em>, <em>exon</em>, <em>five_prime_UTR</em> and <em>three_prime_UTR</em>.</p>
 <p>You can obtain a more graphical view of the dependency structure of the features. Export the tree into a plot using the <em>plot_features</em> function. Note that you will need to install and load previously the R package <strong>DiagrammeR</strong> to use this function:</p>
 <pre class="r"><code>##============================================================================##
-## H    Plot the dependency tree of the gff file
+## H    Plot the dependency tree of the GFF file
 ##============================================================================##
 
 #install DiagrammeR if you do not have it installed (you need to do this only once)
@@ -1752,20 +1747,20 @@ library(&quot;DiagrammeR&quot;)
 
 #plot the features tree
 plot_features(gffFile1)</code></pre>
-<div id="htmlwidget-3bebcbb26402332d7624" style="width:100%;height:100%;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-3bebcbb26402332d7624">{"x":{"diagram":"digraph {\n\n\n\n\n  \"1\" [label = \"\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"2\" [label = \"chromosome\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"3\" [label = \"gene\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"4\" [label = \"mRNA\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"5\" [label = \"CDS\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"6\" [label = \"exon\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"7\" [label = \"five_prime_UTR\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"8\" [label = \"three_prime_UTR\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"9\" [label = \"ncRNA_gene\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"10\" [label = \"lnc_RNA\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"11\" [label = \"exon\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"12\" [label = \"miRNA\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"13\" [label = \"exon\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"14\" [label = \"rRNA\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"15\" [label = \"exon\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"16\" [label = \"snRNA\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"17\" [label = \"exon\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"18\" [label = \"snoRNA\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"19\" [label = \"exon\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"20\" [label = \"tRNA\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"21\" [label = \"exon\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"1\"->\"2\" \n  \"1\"->\"3\" \n  \"1\"->\"9\" \n  \"3\"->\"4\" \n  \"9\"->\"10\" \n  \"9\"->\"12\" \n  \"9\"->\"14\" \n  \"9\"->\"16\" \n  \"9\"->\"18\" \n  \"9\"->\"20\" \n  \"4\"->\"5\" \n  \"4\"->\"6\" \n  \"4\"->\"7\" \n  \"4\"->\"8\" \n  \"10\"->\"11\" \n  \"12\"->\"13\" \n  \"14\"->\"15\" \n  \"16\"->\"17\" \n  \"18\"->\"19\" \n  \"20\"->\"21\" \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-fd39e909026ca25edc0e" style="width:100%;height:100%;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-fd39e909026ca25edc0e">{"x":{"diagram":"digraph {\n\n\n\n\n  \"1\" [label = \"\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"2\" [label = \"chromosome\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"3\" [label = \"gene\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"4\" [label = \"mRNA\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"5\" [label = \"CDS\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"6\" [label = \"exon\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"7\" [label = \"five_prime_UTR\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"8\" [label = \"three_prime_UTR\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"9\" [label = \"ncRNA_gene\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"10\" [label = \"lnc_RNA\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"11\" [label = \"exon\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"12\" [label = \"miRNA\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"13\" [label = \"exon\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"14\" [label = \"rRNA\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"15\" [label = \"exon\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"16\" [label = \"snoRNA\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"17\" [label = \"exon\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"18\" [label = \"snRNA\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"19\" [label = \"exon\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"20\" [label = \"tRNA\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"21\" [label = \"exon\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"1\"->\"2\" \n  \"1\"->\"3\" \n  \"1\"->\"9\" \n  \"3\"->\"4\" \n  \"9\"->\"10\" \n  \"9\"->\"12\" \n  \"9\"->\"14\" \n  \"9\"->\"16\" \n  \"9\"->\"18\" \n  \"9\"->\"20\" \n  \"4\"->\"5\" \n  \"4\"->\"6\" \n  \"4\"->\"7\" \n  \"4\"->\"8\" \n  \"10\"->\"11\" \n  \"12\"->\"13\" \n  \"14\"->\"15\" \n  \"16\"->\"17\" \n  \"18\"->\"19\" \n  \"20\"->\"21\" \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p>The number of occurrences of each feature type present in the file can be added to each feature name in the plot using the <span class="math inline">\(includeCounts = TRUE\)</span> parameter.</p>
 <pre class="r"><code>##=================================================================================##
-## I  Plot the dependency tree of the gff file in PNG format (default format)
+## I  Plot the dependency tree of the GFF file in PNG format (default format)
 ##    and include the number of items of each feature
 ##=================================================================================##
 
 plot_features(gffFile1, includeCounts = TRUE)</code></pre>
-<div id="htmlwidget-3a2aae57bf7c5c6dbb12" style="width:100%;height:100%;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-3a2aae57bf7c5c6dbb12">{"x":{"diagram":"digraph {\n\n\n\n\n  \"1\" [label = \":\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"2\" [label = \"chromosome:1\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"3\" [label = \"gene:2\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"4\" [label = \"mRNA:3\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"5\" [label = \"CDS:14\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"6\" [label = \"exon:15\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"7\" [label = \"five_prime_UTR:4\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"8\" [label = \"three_prime_UTR:3\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"9\" [label = \"ncRNA_gene:7\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"10\" [label = \"lnc_RNA:1\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"11\" [label = \"exon:1\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"12\" [label = \"miRNA:1\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"13\" [label = \"exon:1\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"14\" [label = \"rRNA:1\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"15\" [label = \"exon:1\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"16\" [label = \"snRNA:1\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"17\" [label = \"exon:1\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"18\" [label = \"snoRNA:1\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"19\" [label = \"exon:1\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"20\" [label = \"tRNA:2\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"21\" [label = \"exon:3\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"1\"->\"2\" \n  \"1\"->\"3\" \n  \"1\"->\"9\" \n  \"3\"->\"4\" \n  \"9\"->\"10\" \n  \"9\"->\"12\" \n  \"9\"->\"14\" \n  \"9\"->\"16\" \n  \"9\"->\"18\" \n  \"9\"->\"20\" \n  \"4\"->\"5\" \n  \"4\"->\"6\" \n  \"4\"->\"7\" \n  \"4\"->\"8\" \n  \"10\"->\"11\" \n  \"12\"->\"13\" \n  \"14\"->\"15\" \n  \"16\"->\"17\" \n  \"18\"->\"19\" \n  \"20\"->\"21\" \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-3f45e80b19b348ae5a5a" style="width:100%;height:100%;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3f45e80b19b348ae5a5a">{"x":{"diagram":"digraph {\n\n\n\n\n  \"1\" [label = \":\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"2\" [label = \"chromosome:1\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"3\" [label = \"gene:2\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"4\" [label = \"mRNA:3\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"5\" [label = \"CDS:14\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"6\" [label = \"exon:15\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"7\" [label = \"five_prime_UTR:4\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"8\" [label = \"three_prime_UTR:3\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"9\" [label = \"ncRNA_gene:7\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"10\" [label = \"lnc_RNA:1\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"11\" [label = \"exon:1\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"12\" [label = \"miRNA:1\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"13\" [label = \"exon:1\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"14\" [label = \"rRNA:1\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"15\" [label = \"exon:1\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"16\" [label = \"snoRNA:1\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"17\" [label = \"exon:1\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"18\" [label = \"snRNA:1\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"19\" [label = \"exon:1\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"20\" [label = \"tRNA:2\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"21\" [label = \"exon:3\", fillcolor = \"#FFFFFF\", fontcolor = \"#000000\"] \n  \"1\"->\"2\" \n  \"1\"->\"3\" \n  \"1\"->\"9\" \n  \"3\"->\"4\" \n  \"9\"->\"10\" \n  \"9\"->\"12\" \n  \"9\"->\"14\" \n  \"9\"->\"16\" \n  \"9\"->\"18\" \n  \"9\"->\"20\" \n  \"4\"->\"5\" \n  \"4\"->\"6\" \n  \"4\"->\"7\" \n  \"4\"->\"8\" \n  \"10\"->\"11\" \n  \"12\"->\"13\" \n  \"14\"->\"15\" \n  \"16\"->\"17\" \n  \"18\"->\"19\" \n  \"20\"->\"21\" \n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <p>The plot with the hierarchical structure of features is saved into a file in <span class="math inline">\(png\)</span> by default. <span class="math inline">\(pdf\)</span> or <span class="math inline">\(svg\)</span> formats are also allowed by adding the chosen format in the <span class="math inline">\(exportFormat\)</span> parameter of <strong>plot_features</strong> function and setting the output file path.</p>
 <pre class="r"><code>##=================================================================================##
-## J  Plot the dependency tree of the gff file in PDF format 
+## J  Plot the dependency tree of the GFF file in PDF format 
 ##=================================================================================##
 
 # get the plot in a PDF file
@@ -1787,7 +1782,7 @@ plot_features(gffFile1, outPlot2, exportFormat = &quot;svg&quot;, includeCounts 
 <li>As a dataframe:</li>
 </ul>
 <pre class="r"><code>##============================================================================##
-## K    Extract the feature organization of the gff file in data.frame format
+## K    Extract the feature organization of the GFF file in data.frame format
 ##============================================================================##
 get_features(gffFile1, outFormat = &#39;data.frame&#39;, includeCounts = TRUE)</code></pre>
 <pre><code>##                                                      BLOCKS          FEATURES
@@ -1802,14 +1797,14 @@ get_features(gffFile1, outFormat = &#39;data.frame&#39;, includeCounts = TRUE)</
 ## 9                                                    exon:1         lnc_RNA:1
 ## 11                                                   exon:1           miRNA:1
 ## 13                                                   exon:1            rRNA:1
-## 15                                                   exon:1           snRNA:1
-## 17                                                   exon:1          snoRNA:1
+## 15                                                   exon:1          snoRNA:1
+## 17                                                   exon:1           snRNA:1
 ## 19                                                   exon:3            tRNA:2</code></pre>
 <ul>
 <li>As JSON:</li>
 </ul>
 <pre class="r"><code>##=================================================================================##
-## L    Extract the feature organization of the gff as JSON
+## L    Extract the feature organization of the GFF as JSON
 ##=================================================================================##
 gffFile1_json_features &lt;- get_features(gffFile1, outFormat = &#39;JSON&#39;)
 strsplit(gffFile1_json_features,&quot;\\n&quot;);</code></pre>
@@ -1823,23 +1818,23 @@ strsplit(gffFile1_json_features,&quot;\\n&quot;);</code></pre>
 ##  [7] &quot;\&quot;5\&quot;: [ \&quot;\&quot;, \&quot;exon\&quot; ],&quot;                                               
 ##  [8] &quot;\&quot;6\&quot;: [ \&quot;\&quot;, \&quot;five_prime_UTR\&quot; ],&quot;                                     
 ##  [9] &quot;\&quot;7\&quot;: [ \&quot;\&quot;, \&quot;three_prime_UTR\&quot; ],&quot;                                    
-## [10] &quot;\&quot;8\&quot;: [ \&quot;lnc_RNA exon miRNA rRNA snRNA snoRNA tRNA\&quot;, \&quot;ncRNA_gene\&quot; ],&quot;
+## [10] &quot;\&quot;8\&quot;: [ \&quot;lnc_RNA exon miRNA rRNA snoRNA snRNA tRNA\&quot;, \&quot;ncRNA_gene\&quot; ],&quot;
 ## [11] &quot;\&quot;9\&quot;: [ \&quot;exon\&quot;, \&quot;lnc_RNA\&quot; ],&quot;                                        
 ## [12] &quot;\&quot;11\&quot;: [ \&quot;exon\&quot;, \&quot;miRNA\&quot; ],&quot;                                         
 ## [13] &quot;\&quot;13\&quot;: [ \&quot;exon\&quot;, \&quot;rRNA\&quot; ],&quot;                                          
-## [14] &quot;\&quot;15\&quot;: [ \&quot;exon\&quot;, \&quot;snRNA\&quot; ],&quot;                                         
-## [15] &quot;\&quot;17\&quot;: [ \&quot;exon\&quot;, \&quot;snoRNA\&quot; ],&quot;                                        
+## [14] &quot;\&quot;15\&quot;: [ \&quot;exon\&quot;, \&quot;snoRNA\&quot; ],&quot;                                        
+## [15] &quot;\&quot;17\&quot;: [ \&quot;exon\&quot;, \&quot;snRNA\&quot; ],&quot;                                         
 ## [16] &quot;\&quot;19\&quot;: [ \&quot;exon\&quot;, \&quot;tRNA\&quot; ] &quot;                                          
 ## [17] &quot;} &quot;                                                                       
 ## [18] &quot;}&quot;</code></pre>
 </div>
 <div id="sort" class="section level1">
-<h1>4. Sorting gff files</h1>
-<p>Many operations involving gff files, from indexing to browsing, require the gff to be sorted. In a well structured gff file, all the children features always follow their parents in a single chunk (for example, all exons of a transcript are put after their parent “transcript” feature line and before any other “transcript” line). The function <em>sort_gff</em> produces a well-structured sorted gff file from a gff input file that is ill-structured/unsorted.</p>
+<h1>4. Sorting GFF files</h1>
+<p>Many operations involving GFF files, from indexing to browsing, require the GFF to be sorted. In a well structured GFF file, all the children features always follow their parents in a single chunk (for example, all exons of a transcript are put after their parent “transcript” feature line and before any other “transcript” line). The function <em>sort_gff</em> produces a well-structured sorted GFF file from a GFF input file that is ill-structured/unsorted.</p>
 <p>By default, <em>sort_gff</em> generates a sorted file named as the input file (without extension) plus the suffix “.sorted.gff3” or “.sorted.gtf” depending if the input is a GFF3 or GTF file.</p>
 <p>In previous section <a href="#check">1</a>, we checked a GFF3 file (<em>eden.gff3</em>) that turned out to be incorrectly ordered. We can now sort this file and see if the new ordered file pass the “correctness” validation.</p>
 <pre class="r"><code>##=================================================================================##
-## M  Sort an unsorted gff file
+## M  Sort an unsorted GFF file
 ##=================================================================================##
 
 #sorts the unsorted file gffFile2 (eden.gff3)
@@ -1865,12 +1860,12 @@ head(read.table(gffFile2_sorted,sep=&quot;\t&quot;), n=10L)</code></pre>
 <p>Indeed, <em>sort_gff</em> has produced a sorted file that is correctly ordered by coordinates and this new file meets now all the criteria of a well-formatted GFF3 file, as indicated by <em>check_gff</em>.</p>
 </div>
 <div id="convert-a-gff-file-to-a-saf-file" class="section level1">
-<h1>5. Convert a gff file to a SAF file</h1>
-<p>The <em>“simplified annotation format”</em> (SAF) is a format that is used by the <em>featureCounts</em> function of the <strong>Rsubread</strong> R package as an alternative to GFF3/GTF formats. It also contains information about the feature types needed to quantify reads generated from either RNA or DNA sequencing technologies. It is simpler than gff formats and includes only five required tab-delimited columns for each feature: feature identifier, chromosome name, start position, end position and strand. As in the case of the GTF format, features sharing the same feature identifier are taken to belong to the same “group-by” feature (“meta-feature”, in the Rsubread nomenclature). To obtain more information of the package <strong>featureCounts</strong> and a description of the SAF format see: <a href="https://www.rdocumentation.org/packages/Rsubread/versions/1.22.2/topics/featureCounts" class="uri">https://www.rdocumentation.org/packages/Rsubread/versions/1.22.2/topics/featureCounts</a>.</p>
-<p><strong>Rgff</strong> provides a function to convert a gff file to SAF format, <em>saf_from_gff</em>. This function requires to have the package <strong>rtracklayer</strong> previously installed (see <a href="https://bioconductor.org/packages/release/bioc/html/rtracklayer.html" class="uri">https://bioconductor.org/packages/release/bioc/html/rtracklayer.html</a>)</p>
+<h1>5. Convert a GFF file to a SAF file</h1>
+<p>The <em>“simplified annotation format”</em> (SAF) is a format that is used by the <em>featureCounts</em> function of the <strong>Rsubread</strong> R package as an alternative to GFF3/GTF formats. It also contains information about the feature types needed to quantify reads generated from either RNA or DNA sequencing technologies. It is simpler than GFF formats and includes only five required tab-delimited columns for each feature: feature identifier, chromosome name, start position, end position and strand. As in the case of the GTF format, features sharing the same feature identifier are taken to belong to the same “group-by” feature (“meta-feature”, in the Rsubread nomenclature). To obtain more information of the package <strong>featureCounts</strong> and a description of the SAF format see: <a href="https://www.rdocumentation.org/packages/Rsubread/versions/1.22.2/topics/featureCounts" class="uri">https://www.rdocumentation.org/packages/Rsubread/versions/1.22.2/topics/featureCounts</a>.</p>
+<p><strong>Rgff</strong> provides a function to convert a GFF file to SAF format, <em>saf_from_gff</em>. This function requires to have the package <strong>rtracklayer</strong> previously installed (see <a href="https://bioconductor.org/packages/release/bioc/html/rtracklayer.html" class="uri">https://bioconductor.org/packages/release/bioc/html/rtracklayer.html</a>)</p>
 <p>For example, the simplest use of this function would be to obtain a SAF compiling only the lines of the GFF3 that refers the feature “gene”. For that, you only need to put this feature name in the vector required by the <em>features</em> parameter:</p>
 <pre class="r"><code>##============================================================================##
-## N    Convert a gff file to SAF format, only the &quot;gene&quot; feature
+## N    Convert a GFF file to SAF format, only the &quot;gene&quot; feature
 ##============================================================================##
 
 safFileConverted &lt;- saf_from_gff(gffFile1, features = c(&quot;gene&quot;))
@@ -1881,7 +1876,7 @@ read.table(safFileConverted,sep=&quot;\t&quot;,header=TRUE)</code></pre>
 ## 2 gene:AT1G01110   1 51953 54737      +  gene</code></pre>
 <p>You can compile in a SAF the intervals belonging to more than one feature by adding all the feature names of interest to the <em>features</em> vector. For example, for “gene” plus “ncRNA-gene”:</p>
 <pre class="r"><code>##================================================================================##
-## O    Convert a gff file to SAF format, both &quot;gene&quot; and &quot;ncRNA_gene&quot; features
+## O    Convert a GFF file to SAF format, both &quot;gene&quot; and &quot;ncRNA_gene&quot; features
 ##================================================================================##
 
 safFileConverted2 &lt;- saf_from_gff(gffFile1, features = c(&quot;gene&quot;,&quot;ncRNA_gene&quot;))
@@ -1899,7 +1894,7 @@ read.table(safFileConverted2,sep=&quot;\t&quot;,header=TRUE)</code></pre>
 ## 9 gene:AT5G02255   5  4690371  4690412      - ncRNA_gene</code></pre>
 <p>Some features, like “gene”, are constructs that have constituent sub-features underneath. We name these sub-features “blocks”. All the blocks belonging to a particular meta-feature share the same feature ID. With <em>saf_from_gff</em> you can extract a SAF containing the information of a particular block type for each meta-feature type. A usual example is to get all the exons grouped by their corresponding genes (genes would be the “group_by” or “meta-feature” in this case). Use the notation <span class="math inline">\((group\_by\_feature &gt; block\_feature)\)</span> in the <em>features</em> parameter vector to achieve this grouping in the resulting SAF file:</p>
 <pre class="r"><code>##============================================================================##
-## P    Convert a gff file to SAF format, compiling &quot;exons by gene&quot;
+## P    Convert a GFF file to SAF format, compiling &quot;exons by gene&quot;
 ##============================================================================##
 
 safFileConverted3 &lt;- saf_from_gff(gffFile1, features = c(&quot;gene &gt; exon&quot;))
@@ -1926,7 +1921,7 @@ read.table(safFileConverted3,sep=&quot;\t&quot;,header=TRUE)</code></pre>
 <pre class="r"><code>safFileConverted5 &lt;- saf_from_gff(gffFile1, features = c(&quot;gene : exon&quot;), sep = &#39;:&#39;)</code></pre>
 <p>You may be interested in compiling more than a pair “group_by feature &gt; block feature” in one single SAF file. To do that, you should write, separated by comma, all the pairs in the vector of the parameter <em>feature</em>. In the example below, we obtain a new SAF containing both “exons by genes” (<span class="math inline">\(gene &gt; exon\)</span>) and “exons by non-coding genes” (<span class="math inline">\(ncRNA\_gene &gt; exon\)</span>):</p>
 <pre class="r"><code>##==============================================================================##
-## Q    Convert a gff file to SAF format, compiling &quot;exons by gene&quot;  
+## Q    Convert a GFF file to SAF format, compiling &quot;exons by gene&quot;  
 ##      and &quot;exons by non-coding RNA genes&quot;
 ##==============================================================================##
 
@@ -1967,30 +1962,44 @@ read.table(safFileConverted6,sep=&quot;\t&quot;,header=TRUE)</code></pre>
 
 # load and show our example GTF file
 gtfFile1 &lt;- file.path(dir,&quot;AthSmall.gtf&quot;)
-head(read.table(gtfFile1,sep=&quot;\t&quot;))[,1:8]</code></pre>
-<pre><code>##   V1        V2          V3   V4   V5 V6 V7 V8
-## 1  1 araport11        gene 3631 5899  .  +  .
-## 2  1 araport11  transcript 3631 5899  .  +  .
-## 3  1 araport11        exon 3631 3913  .  +  .
-## 4  1 araport11         CDS 3760 3913  .  +  0
-## 5  1 araport11 start_codon 3760 3762  .  +  0
-## 6  1 araport11        exon 3996 4276  .  +  .</code></pre>
-<pre class="r"><code># convert the GTF format to GFF3 format
-gffFileConverted &lt;- gtf_to_gff3(gtfFile1, forceOverwrite = TRUE)</code></pre>
-<pre class="r"><code># show the results of the conversion
-head(read.table(gffFileConverted,sep=&quot;\t&quot;))[,1:8]</code></pre>
+head(read.table(gtfFile1,sep=&quot;\t&quot;))</code></pre>
 <pre><code>##   V1        V2             V3   V4   V5 V6 V7 V8
 ## 1  1 araport11           gene 3631 5899  .  +  .
 ## 2  1 araport11     transcript 3631 5899  .  +  .
 ## 3  1 araport11           exon 3631 3913  .  +  .
 ## 4  1 araport11 five_prime_utr 3631 3759  .  +  .
 ## 5  1 araport11            CDS 3760 3913  .  +  0
-## 6  1 araport11    start_codon 3760 3762  .  +  0</code></pre>
+## 6  1 araport11    start_codon 3760 3762  .  +  0
+##                                               V9
+## 1                            gene_id AT1G01010; 
+## 2 gene_id AT1G01010; transcript_id AT1G01010.1; 
+## 3 gene_id AT1G01010; transcript_id AT1G01010.1; 
+## 4 gene_id AT1G01010; transcript_id AT1G01010.1; 
+## 5 gene_id AT1G01010; transcript_id AT1G01010.1; 
+## 6 gene_id AT1G01010; transcript_id AT1G01010.1;</code></pre>
+<pre class="r"><code># convert the GTF format to GFF3 format
+gffFileConverted &lt;- gtf_to_gff3(gtfFile1, forceOverwrite = TRUE)</code></pre>
+<pre class="r"><code># show the results of the conversion
+head(read.table(gffFileConverted,sep=&quot;\t&quot;))</code></pre>
+<pre><code>##   V1        V2             V3   V4   V5 V6 V7 V8
+## 1  1 araport11           gene 3631 5899  .  +  .
+## 2  1 araport11     transcript 3631 5899  .  +  .
+## 3  1 araport11           exon 3631 3913  .  +  .
+## 4  1 araport11 five_prime_utr 3631 3759  .  +  .
+## 5  1 araport11            CDS 3760 3913  .  +  0
+## 6  1 araport11    start_codon 3760 3762  .  +  0
+##                                       V9
+## 1                          ID=AT1G01010;
+## 2        ID=AT1G01010.1;Parent=AT1G01010
+## 3           ID=exon_1;Parent=AT1G01010.1
+## 4 ID=five_prime_utr_1;Parent=AT1G01010.1
+## 5            ID=CDS_1;Parent=AT1G01010.1
+## 6    ID=start_codon_1;Parent=AT1G01010.1</code></pre>
 </div>
 <div class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p><font size="2"><em>GTF format is in fact equivalent to GFF version 2, so we use “gff” in this document as a global name to refer any of both formats, GTF or GFF3</em></font><a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn1"><p><font size="2"><em>GTF format is in fact equivalent to GFF version 2, so we use “GFF” in this document as a global name to refer any of both formats, GTF or GFF3</em></font><a href="#fnref1" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
 
