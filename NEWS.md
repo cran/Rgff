@@ -1,3 +1,8 @@
+# Rgff 0.1.4
+
+* Sorted output on SAF and paths conversion.
+* Improved performance parsing features with multiple parents.
+ 
 # Rgff 0.1.3
 
 * Bug fixed when transcript features are missing in GTF.

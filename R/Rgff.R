@@ -175,10 +175,17 @@ gff3_to_paths<-function(gffFile, outFile, forceOverwrite=FALSE){
 	
 	withMulti<-grep(",",uniqueFeatureIdAndParent$ParentID)
 	if(length(withMulti)>0){	
-		newItems<-do.call("rbind",lapply(withMulti,function(x){as.data.frame(t(sapply(strsplit(as.character(uniqueFeatureIdAndParent$ParentID[x]),",")[[1]],function(y){as.character(c(uniqueFeatureIdAndParent[x,"Feature"],uniqueFeatureIdAndParent[x,"ID"],y))})))}))
-		colnames(newItems) <- c("Feature", "ID", "ParentID")		
-		
-		uniqueFeatureIdAndParent<-rbind(uniqueFeatureIdAndParent[-withMulti,],newItems)
+
+		nParents<-stringi::stri_count_fixed(uniqueFeatureIdAndParent$ParentID[withMulti],",")
+		newFeat<-uniqueFeatureIdAndParent[withMulti,][rep(seq_len(nrow(uniqueFeatureIdAndParent[withMulti,])), nParents+1), ]
+		newParents<-unlist(strsplit(as.character(uniqueFeatureIdAndParent[withMulti,]$ParentID),","))
+		newFeat$ParentID<-newParents
+		uniqueFeatureIdAndParent<-rbind(uniqueFeatureIdAndParent[-withMulti,],newFeat)
+
+
+		# newItems<-do.call("rbind",lapply(withMulti,function(x){as.data.frame(t(sapply(strsplit(as.character(uniqueFeatureIdAndParent$ParentID[x]),",")[[1]],function(y){as.character(c(uniqueFeatureIdAndParent[x,"Feature"],uniqueFeatureIdAndParent[x,"ID"],y))})))}))
+		# colnames(newItems) <- c("Feature", "ID", "ParentID")	
+		# uniqueFeatureIdAndParent<-rbind(uniqueFeatureIdAndParent[-withMulti,],newItems)
 	}
 
 
@@ -303,7 +310,7 @@ saf_from_paths<-function(pathsFile,groupBy=c("mRNA","gene"),block=c("exon","CDS"
 	rm(list=setdiff(ls(), "DF"))	
 	gc(reset=T)
 	
-	return (DF[order(DF$Chr,DF$GeneID,DF$Start),])
+	return (DF[order(DF$Chr,DF$GeneID,as.numeric(DF$Start)),])
 }
 
 
@@ -472,7 +479,7 @@ saf_from_gff3<-function(gffFile, outFile, forceOverwrite=FALSE, features=c("gene
 			safDF<-rbind(safDF,unique(saf_from_paths(PATHSfile,groupBy=c(featureList[i]),block=blockParam)))
 		}
 	}	
-	safDF<-unique(safDF[order(safDF[,2], safDF[,3], safDF[,4], safDF[,1] ),])
+	safDF<-unique(safDF[order(safDF[,2], as.numeric(safDF[,3]), -as.numeric(safDF[,4]), safDF[,1] ),])
 
 	utils::write.table(safDF,foutput,sep="\t",quote=FALSE,row.names = FALSE)
 
@@ -1325,7 +1332,7 @@ saf_from_gff<-function(inFile, outFile, fileType=c("AUTO","GFF3","GTF"), forceOv
 			safDF<-rbind(safDF,unique(saf_from_paths(PATHSfile,groupBy=featureParam,block=blockParam)))
 		}
 	}	
-	safDF<-unique(safDF[order(safDF[,2], safDF[,3], safDF[,4], safDF[,1] ),])
+	safDF<-unique(safDF[order(safDF[,2], as.numeric(safDF[,3]), -as.numeric(safDF[,4]), safDF[,1] ),])
 
 	utils::write.table(safDF,foutput,sep="\t",quote=FALSE,row.names = FALSE)
 
