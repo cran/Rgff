@@ -1,12 +1,12 @@
-d4a47dae704d305e30163b8b3f96db6b *DESCRIPTION
+c60a2b03b763b60da6dcab562ae0afa7 *DESCRIPTION
 aa349a7f0a7b07128bda60c89e1c6c1c *NAMESPACE
-93af41abe639ff7c67de2716a89a616c *NEWS.md
-03f1d5587dc88771dc77f53d72182c70 *R/Rgff.R
+6e6e7e5299fb4b6f8f53479b77b7eed2 *NEWS.md
+c51ae9f31ce7695d1d8298f20f4f5165 *R/Rgff.R
 b56ff2b193ecba52f9ec7f3b10cca008 *R/utils-pipe.R
 6ecd8f4596cdc75161df32be2c6d47d7 *build/vignette.rds
 9ad72cbdeb7c6a90ef85869f8f99a9a3 *inst/doc/Using_Rgff.R
 1b5b046a62d57830e1191d7d9274cd94 *inst/doc/Using_Rgff.Rmd
-fd76786e44165ed6b06b9cb4f0c1e848 *inst/doc/Using_Rgff.html
+b7d5d6826043f795bdf97905e4caadf1 *inst/doc/Using_Rgff.html
 a0f1f1c916e784d2ca407f7a6f630579 *inst/extdata/AthSmall.gff3
 7bca496cc13c5bb4503dcd3240a472ba *inst/extdata/AthSmall.gff3.gene-exon.ncRNA_gene-exon.saf
 5181285ec038ce8483be6ae792bcfea3 *inst/extdata/AthSmall.gff3.gene-exon.saf

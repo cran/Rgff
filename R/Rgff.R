@@ -644,7 +644,7 @@ get_features<- function(inFile, includeCounts=FALSE, outFormat=c("tree", "data.f
 		myPairData<-pairsFile
 	} else if (is.vector(pairsFile) && is.character(pairsFile) && length(pairsFile)==1) {
 		if(file.exists(pairsFile)){
-			myPairData<-utils::read.table(pairsFile,header=T,sep="\t")
+			myPairData<-utils::read.table(pairsFile,header=T,sep="\t", stringsAsFactors=FALSE,colClasses=c("character","character","numeric"))
 		} else {
 			stop("Only Data frame of pairs or a valid path of pairs file are allowed")
 		}
@@ -652,6 +652,8 @@ get_features<- function(inFile, includeCounts=FALSE, outFormat=c("tree", "data.f
 	if(!all(c("ELEMENT","PARENT") %in% names(myPairData))){
 		stop("Missing ELEMENT or PARENT columns in pair data")
 	} 
+	
+	myPairData<-myPairData %>% dplyr::relocate(.data$PARENT, .before = .data$ELEMENT)
 	
 	myTree<-data.tree::as.Node(myPairData,mode="network") 
 	if(outFormat == "tree"){
