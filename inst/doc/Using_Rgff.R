@@ -63,11 +63,10 @@ get_features(gffFile1)
 #install DiagrammeR if you do not have it installed (you need to do this only once)
 # install.packages("DiagrammeR")
 
-#load DiagrammeR
-library("DiagrammeR")
-
-#plot the features tree
-plot_features(gffFile1)
+if(requireNamespace("DiagrammeR")){
+    #plot the features tree
+    plot_features(gffFile1)
+}
 
 ## ----out.height="100%", out.width="100%"--------------------------------------
 ##=================================================================================##
@@ -75,31 +74,33 @@ plot_features(gffFile1)
 ##    and include the number of items of each feature
 ##=================================================================================##
 
-plot_features(gffFile1, includeCounts = TRUE)
+if(requireNamespace("DiagrammeR")){
+	plot_features(gffFile1, includeCounts = TRUE)
+}
 
-## ---- results=FALSE, message=FALSE, warning=FALSE-----------------------------
+## ----results=FALSE, message=FALSE, warning=FALSE------------------------------
 ##=================================================================================##
 ## J  Plot the dependency tree of the GFF file in PDF format 
 ##=================================================================================##
 
 # get the plot in a PDF file
-outPlot1 <- file.path(tempdir(),"treeplot_from_gff3_file.pdf")
-plot_features(gffFile1, outPlot1, exportFormat = "pdf", includeCounts = FALSE)
+if(requireNamespace("DiagrammeR")){
+	outPlot1 <- file.path(tempdir(),"treeplot_from_gff3_file.pdf")
+	plot_features(gffFile1, outPlot1, exportFormat = "pdf", includeCounts = FALSE)
+}
 
 
 ## ----results=FALSE, message=FALSE, warning=FALSE, eval=FALSE------------------
-#  
-#  # installing and loading the required packages for svg format
-#  # install.packages("DiagrammeRsvg")
-#  # install.packages("rsvg")
-#  
-#  library("DiagrammeRsvg")
-#  library("rsvg")
-#  
-#  # get the plot in a svg file
-#  outPlot2 <- file.path(tempdir(),"outplot_from_gff3.svg")
-#  plot_features(gffFile1, outPlot2, exportFormat = "svg", includeCounts = TRUE)
-#  
+# 
+# # installing and loading the required packages for svg format
+# # install.packages("DiagrammeRsvg")
+# # install.packages("rsvg")
+# 
+# if(requireNamespace("DiagrammeRsvg") && requireNamespace("rsvg")){
+# 	# get the plot in a svg file
+# 	outPlot2 <- file.path(tempdir(),"outplot_from_gff3.svg")
+# 	plot_features(gffFile1, outPlot2, exportFormat = "svg", includeCounts = TRUE)
+# }
 
 ## ----message=FALSE, warning=FALSE---------------------------------------------
 ##============================================================================##
@@ -197,13 +198,13 @@ head(read.table(gtfFile1,sep="\t"))
 
 ## ----echo=TRUE, results='hide', message=FALSE, warning=FALSE------------------
 
-# convert the GTF format to GFF3 format
-gffFileConverted <- gtf_to_gff3(gtfFile1)
+if (requireNamespace("rtracklayer")){
+    # convert the GTF format to GFF3 format
+    gffFileConverted <- gtf_to_gff3(gtfFile1)
 
 
-
-## ----message=FALSE, warning=FALSE---------------------------------------------
-# show the results of the conversion
-head(read.table(gffFileConverted,sep="\t"))
+	# show the results of the conversion
+	head(read.table(gffFileConverted,sep="\t"))
+}
 
 
